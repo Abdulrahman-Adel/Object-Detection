@@ -10,7 +10,7 @@ The [PASCAL Visual Object Classes](https://www.kaggle.com/dataset/734b7bcb7ef13a
 </p>
 
 
-##YOLOv1 
+## YOLOv1 
 
 [YOLOv1](https://arxiv.org/abs/1506.02640v5) is a single-stage object detection model. Object detection is framed as a regression problem to spatially separated bounding boxes and associated class probabilities. A single neural network predicts bounding boxes and class probabilities directly from full images in one evaluation. Since the whole detection pipeline is a single network, it can be optimized end-to-end directly on detection performance.
 
