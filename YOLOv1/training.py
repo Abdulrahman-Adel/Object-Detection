@@ -24,8 +24,8 @@ DEVICE = torch.device("cpu")
 
 IMG_DIR = "data/images"
 LABEL_DIR = "data/labels"
-#CSV_FILE = "data/8examples.csv"
-CSV_FILE = "data/100examples.csv"
+CSV_FILE = "data/8examples.csv"
+#CSV_FILE = "data/100examples.csv"
 
 
 class Compose(object):
@@ -57,6 +57,7 @@ def train(dataloader, model, optimizer, loss_fn):
         loop.set_postfix(loss = loss.item()) 
         
     print(f"Mean Loss was {sum(mean_loss)/len(mean_loss)}")
+    
 
 
 def main():
@@ -80,7 +81,7 @@ def main():
     EPOCHS = 100
     for epoch in range(EPOCHS):
         
-        print(f"Number of the Epoch: {epoch}")
+        print(f"Number of Epoch: {epoch+1}")
         
         pred_boxes, target_boxes = get_bboxes(
             train_loader, model, iou_threshold=0.5, threshold=0.4
@@ -93,17 +94,16 @@ def main():
         print(f"Train mAP: {mean_avg_prec}")
         
         train(train_loader, model, optimizer, loss_fn)
-        
+             
     for x, y in train_loader:
-            x = x.to(DEVICE)
-            for idx in range(8):
-                bboxes = cellboxes_to_boxes(model(x))
-                bboxes = non_max_suppression(bboxes[idx], iou_threshold=0.5, threshold=0.4, box_format="midpoint")
-                plot_image(x[idx].permute(1,2,0).to("cpu"), bboxes)
+             x = x.to(DEVICE)
+             for idx in range(8):
+                 bboxes = cellboxes_to_boxes(model(x))
+                 bboxes = non_max_suppression(bboxes[idx], iou_threshold=0.5, threshold=0.4, box_format="midpoint")
+                 plot_image(x[idx].permute(1,2,0).to("cpu"), bboxes, f"image{idx+1}.jpg")
 
-            import sys
-            sys.exit()      
-        
+             import sys
+             sys.exit()       
 
 if __name__ == "__main__":
     main()
