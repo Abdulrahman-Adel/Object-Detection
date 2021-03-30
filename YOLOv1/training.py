@@ -24,8 +24,8 @@ DEVICE = torch.device("cpu")
 
 IMG_DIR = "data/images"
 LABEL_DIR = "data/labels"
-CSV_FILE = "data/8examples.csv"
-#CSV_FILE = "data/100examples.csv"
+#CSV_FILE = "data/8examples.csv"
+CSV_FILE = "data/100examples.csv"
 
 
 class Compose(object):
@@ -95,7 +95,7 @@ def main():
         
         train(train_loader, model, optimizer, loss_fn)
              
-    for x, y in train_loader:
+    """for x, y in train_loader:
              x = x.to(DEVICE)
              for idx in range(8):
                  bboxes = cellboxes_to_boxes(model(x))
@@ -103,7 +103,8 @@ def main():
                  plot_image(x[idx].permute(1,2,0).to("cpu"), bboxes, f"image{idx+1}.jpg")
 
              import sys
-             sys.exit()       
+             sys.exit()    """
+    torch.save(model.state_dict(), 'Yolov1_overfitting.pt')          
 
 if __name__ == "__main__":
     main()
